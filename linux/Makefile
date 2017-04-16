@@ -1,6 +1,6 @@
 
-TARGET1 := main_part1
-TARGET2 := main_part2
+TARGET1 := part1
+TARGET2 := part2
 
 CXX = g++
 
