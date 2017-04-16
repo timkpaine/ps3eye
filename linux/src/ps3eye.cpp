@@ -4,7 +4,7 @@
 
 using namespace cv;
  
-run_camera(Context& ctx)
+int run_camera(Context& context)
 {
     VideoCapture cap(0); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
