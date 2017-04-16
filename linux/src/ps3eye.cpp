@@ -36,9 +36,9 @@ int run_camera(Context& context)
                 int r = pixel[2];
                 int g = pixel[1];
                 int b = pixel[0];
-                destimg[row*col + col] = r;
-                destimg[row*col + col+1] = g; 
-                destimg[row*col + col+2] = b; 
+                destimg[row*640 + col] = r;
+                destimg[row*640 + col+1] = g; 
+                destimg[row*640 + col+2] = b; 
             }
         }
 
