@@ -24,7 +24,6 @@ public:
 
     }
 
-
     virtual void populate_image() = 0;
     virtual void print_image() = 0;
     virtual void average_image() = 0;
@@ -32,6 +31,7 @@ public:
     virtual int *index_image(int x_val, int y_val) = 0;
     virtual void replace_in_image(int *start, char color, int value) = 0;
     virtual void flip_image() = 0;
+    virtual void copy_from(vector<int> &copy_from) = 0;
 
 };
 

@@ -10,7 +10,7 @@ using namespace std;
 int main(){
     vector<int> vector_from1 = {
         0,0,0, 1,1,1, 0,0,0, 0,0,0,
-        0,0,0, 1,1,1, 0,0,0, 1,1,1,
+        0,0,0, 1,1,1, 0,0,0, 0,0,0,
     };
 
     vector<int> vector_from2 = {
