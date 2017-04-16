@@ -36,4 +36,4 @@ $(TARGET2): $(OBJECTS2)
 
 
 clean:
-	rm -rf *.o *~ main_* *.dSYM src/*.o
+	rm -rf *.o *~ part1 part2 *.dSYM src/*.o

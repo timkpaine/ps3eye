@@ -54,7 +54,7 @@ int run_camera(Context& context)
         if(destimg==0){
             destimg = new vector<uint8_t>(size);
         }
-        memcpy(destimg, (uint8_t*) video_tex_pixels,size);
+        memcpy(destimg, (uint8_t*) frame.data,size);
 
         frame_function(context, *destimg);
 
