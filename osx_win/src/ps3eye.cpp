@@ -1500,16 +1500,11 @@ int run_camera(Context& context)
 
 
         int size = ctx.eye->getHeight() * ctx.eye->getWidth()*3;
-        vector<uint8_t> *destimg = 0;
-        if(destimg==0){
-			destimg = new vector<uint8_t>(size);
-            // destimg = new uint8_t[size];
-        }
-        memcpy(destimg, (uint8_t*) video_tex_pixels,size);
 
-        frame_function(context, *destimg);
+        vector<uint8_t> destimg((uint8_t*) video_tex_pixels, (uint8_t*)video_tex_pixels+size);
+        frame_function(context, destimg);
         
-        Mat m = Mat(480, 640, CV_8UC3, destimg); 
+        Mat m = Mat(480, 640, CV_8UC3, (uint8_t*)&destimg[0]); 
         imshow("Output", m);
         waitKey(1);
 
