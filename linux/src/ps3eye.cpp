@@ -4,49 +4,62 @@
 #include <iostream>
 
 using namespace cv;
- 
+using namespace std;
+
+string type2str(int type) {
+  string r;
+
+  uchar depth = type & CV_MAT_DEPTH_MASK;
+  uchar chans = 1 + (type >> CV_CN_SHIFT);
+
+  switch ( depth ) {
+    case CV_8U:  r = "8U"; break;
+    case CV_8S:  r = "8S"; break;
+    case CV_16U: r = "16U"; break;
+    case CV_16S: r = "16S"; break;
+    case CV_32S: r = "32S"; break;
+    case CV_32F: r = "32F"; break;
+    case CV_64F: r = "64F"; break;
+    default:     r = "User"; break;
+  }
+
+  r += "C";
+  r += (chans+'0');
+
+  return r;
+}
+
 int run_camera(Context& context)
 {
     VideoCapture cap(0); // open the default camera
-    if(!cap.isOpened())  // check if we succeeded
+    if(!cap.isOpened()){  // check if we succeeded
         std::cout << "No Camera detected." << std::endl;
         return -1;
- 
-    Mat edges;
+    }
+    // Mat edges;
     namedWindow("Input",1);
     namedWindow("Output",1);
 
+    Mat frame(480, 640, CV_8UC3);
+
     for(;;)
     {
-        Mat frame;
         cap >> frame; // get a new frame from camera
-
-        // cvtColor(frame, edges, CV_BGR2GRAY);
-        // GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
-        // Canny(edges, edges, 0, 30, 3);
-        // imshow("edges", edges);
+        // cv::cvtColor(frame_raw, frame, CV_BGR2GRAY);
         imshow("Input", frame);
+        string ty =  type2str( frame.type() );
 
-        int size = 640*480*3;
+        int size = context.height*context.width*3;
         uint8_t* destimg = 0;
         if(destimg==0){
             destimg = new uint8_t[size];
         }
-        for(int row; row<480; row++){
-            for(int col; col<640; col++){
-                Vec3f pixel = frame.at<Vec3f>(row, col);
-                int r = pixel[2];
-                int g = pixel[1];
-                int b = pixel[0];
-                destimg[row*640 + col] = r;
-                destimg[row*640 + col+1] = g; 
-                destimg[row*640 + col+2] = b; 
-            }
-        }
+
+        memcpy(destimg, (uint8_t*) frame.data, size);
 
         frame_function(context, destimg);
 
-        Mat m = Mat(480, 640, CV_8UC3, destimg); 
+        Mat m(480, 640, CV_8UC3, destimg); 
         imshow("Output", m);
         waitKey(1);
     }
