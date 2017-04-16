@@ -1,6 +1,7 @@
 #include "opencv2/opencv.hpp"
 #include "context.h"
 #include "frame_function.h"
+#include <iostream>
 
 using namespace cv;
  
@@ -8,6 +9,7 @@ int run_camera(Context& context)
 {
     VideoCapture cap(0); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
+        std::cout << "No Camera detected." << std::endl;
         return -1;
  
     Mat edges;
