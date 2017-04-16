@@ -43,33 +43,34 @@ public:
     CameraImage(vector<int> &copy_from, int x, int y) : Image(copy_from, x,y){}
 
     virtual void populate_image(){
-        populate_vector(local_buffer);
+        hw::populate_vector(this->local_buffer);
     }
 
     virtual void print_image(){
-        print_vector(local_buffer, width, height);
+        hw::print_vector(this->local_buffer, this->width, this->height);
     }
 
     virtual void average_image(){
-        average_vector(local_buffer);
+        hw::average_vector(this->local_buffer);
     }
 
     virtual void invert_image(){
-        invert_vector(local_buffer);
+        hw::invert_vector(this->local_buffer);
     }
 
     virtual int *index_image(int x_val, int y_val){
-        return index_vector(local_buffer, width, height, x_val, y_val);
+        return hw::index_vector(this->local_buffer, this->width, this->height, x_val, y_val);
     }
 
     virtual void replace_in_image(int *start, char color, int value){
-        replace_in_vector(local_buffer, width, height, start, color, value);
+        hw::replace_in_vector(this->local_buffer, this->width, this->height, start, color, value);
     }
 
     virtual void flip_image(){
-        flip_vector(local_buffer, width, height);
+        hw::flip_vector(this->local_buffer, this->width, this->height);
     }
 
+    //TODO copy from!
 };
 
 #endif

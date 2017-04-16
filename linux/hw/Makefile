@@ -1,4 +1,4 @@
-TARGET := lib/libhw.dylib
+TARGET := lib/libhw.so
 
 # C++ Compiler
 CXX := g++ 
@@ -14,7 +14,6 @@ CXXFLAGS += -I./include
 
 CXX_HEADERS := include/hw1.h
 CXX_HEADERS += include/hw2.h
-CXX_SOURCES := src/hw1.cpp
 CXX_SOURCES += src/hw2.cpp
 
 CXX_OBJECTS := $(CXX_SOURCES:.cpp=.o)
