@@ -1,53 +1,25 @@
-#include <stdio.h>
-#include <time.h>
-
-#include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
-
-int main(int argc, char *argv[]) {
-
-  const int cameraIndex = 0;
-  const bool isColor = true;
-  const int w = 320;
-  const int h = 240;
-  const double captureFPS = 187.0;
-  const double writerFPS = 60.0;
-  // With MJPG encoding, OpenCV requires the AVI extension.
-  const char filename[] = "SlowMo.avi";
-  const int fourcc = cv::VideoWriter::fourcc('M','J','P','G');
-  const unsigned int numFrames = 3750;
-
-  cv::Mat mat;
-
-  // Initialize and configure the video capture.
-  cv::VideoCapture capture(cameraIndex);
-  if (!isColor) {
-    capture.set(cv::CAP_PROP_MODE, cv::CAP_MODE_GRAY);
-  }
-  capture.set(cv::CAP_PROP_FRAME_WIDTH, w);
-  capture.set(cv::CAP_PROP_FRAME_HEIGHT, h);
-  capture.set(cv::CAP_PROP_FPS, captureFPS);
-
-  // Initialize the video writer.
-  cv::VideoWriter writer(
-      filename, fourcc, writerFPS, cv::Size(w, h), isColor);
-
-  // Get the start time.
-  clock_t startTicks = clock();
-
-  // Capture frames and write them to the video file.
-  for (unsigned int i = 0; i < numFrames;) {
-    if (capture.read(mat)) {
-      writer.write(mat);
-      i++;
+#include "opencv2/opencv.hpp"
+ 
+using namespace cv;
+ 
+int main(int, char**)
+{
+    VideoCapture cap(0); // open the default camera
+    if(!cap.isOpened())  // check if we succeeded
+        return -1;
+ 
+    Mat edges;
+    namedWindow("edges",1);
+    for(;;)
+    {
+        Mat frame;
+        cap >> frame; // get a new frame from camera
+        cvtColor(frame, edges, CV_BGR2GRAY);
+        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
+        Canny(edges, edges, 0, 30, 3);
+        imshow("edges", edges);
+        if(waitKey(30) >= 0) break;
     }
-  }
-
-  // Get the end time.
-  clock_t endTicks = clock();
-
-  // Calculate and print the actual frame rate.
-  double actualFPS = numFrames * CLOCKS_PER_SEC /
-      (double)(endTicks - startTicks);
-  printf("FPS: %.1f\n", actualFPS);
+    // the camera will be deinitialized automatically in VideoCapture destructor
+    return 0;
 }
