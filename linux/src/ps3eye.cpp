@@ -32,7 +32,7 @@ run_camera(Context& ctx)
         }
         for(int row; row<480; row++){
             for(int col; col<640; col++){
-                Vec3f pixel = image.at<Vec3f>(row, col);
+                Vec3f pixel = frame.at<Vec3f>(row, col);
                 int r = pixel[2];
                 int g = pixel[1];
                 int b = pixel[0];
