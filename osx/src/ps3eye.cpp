@@ -1506,11 +1506,10 @@ int run_camera(Context& context)
         memcpy(destimg, (uint8_t*) video_tex_pixels,size);
 
         frame_function(context, destimg);
-
+        
         Mat m = Mat(480, 640, CV_8UC3, destimg); 
         imshow("Output", m);
         waitKey(1);
-
 
 		SDL_UnlockTexture(video_tex);
 
