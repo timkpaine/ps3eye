@@ -3,7 +3,10 @@
 
 #include "context.h"
 #include <stdint.h>
+#include <vector>
 
-void frame_function(Context &context, uint8_t* buffer);
+using namespace std;
+
+void frame_function(Context &context, vector<uint8_t> &buffer);
 
 #endif

@@ -50,14 +50,13 @@ int run_camera(Context& context)
         string ty =  type2str( frame.type() );
 
         int size = context.height*context.width*3;
-        uint8_t* destimg = 0;
+        vector<uint8_t> *destimg = 0;
         if(destimg==0){
-            destimg = new uint8_t[size];
+            destimg = new vector<uint8_t>(size);
         }
+        memcpy(destimg, (uint8_t*) video_tex_pixels,size);
 
-        memcpy(destimg, (uint8_t*) frame.data, size);
-
-        frame_function(context, destimg);
+        frame_function(context, *destimg);
 
         Mat m(480, 640, CV_8UC3, destimg); 
         imshow("Output", m);
