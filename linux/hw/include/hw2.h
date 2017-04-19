@@ -23,6 +23,7 @@ public:
     {
 
     }
+    virtual ~Image(){}
 
     virtual void populate_image() = 0;
     virtual void print_image() = 0;
@@ -41,6 +42,7 @@ public:
     CameraImage() : Image(){}
     CameraImage(int x, int y) : Image(x,y){}
     CameraImage(vector<int> &copy_from, int x, int y) : Image(copy_from, x,y){}
+    virtual ~CameraImage(){}
 
     virtual void populate_image(){
         hw::populate_vector(this->local_buffer);
